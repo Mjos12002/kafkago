@@ -2,25 +2,27 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"time"
-    "github.com/joho/godotenv"
+
 	"github.com/confluentinc/confluent-kafka-go/kafka"
+	"github.com/joho/godotenv"
 )
 
-func init {
+func init() {
 	err := godotenv.Load()
-    if err != nil {
-        log.Fatal("Error loading .env file")
-    }
+	if err != nil {
+		log.Fatal("Error loading .env file" + err.Error())
+	}
 }
 
 func main() {
 	fmt.Println("Welcome to Kigali")
 
 	c, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers": os.Getenv("BOOTSTRAP-SERVER"),
-		"group.id":          os.Getenv("GROUP-ID"),
+		"bootstrap.servers": os.Getenv("BOOTSTRAPSERVER"),
+		"group.id":          os.Getenv("GROUPID"),
 		"auto.offset.reset": "earliest",
 		"security.protocol": "SASL_SSL",
 		"sasl.mechanism":    "SCRAM-SHA-256",
@@ -32,7 +34,7 @@ func main() {
 		panic(err)
 	}
 
-	err = c.SubscribeTopics([]string{"death"}, nil)
+	err = c.SubscribeTopics([]string{"death", "birth"}, nil)
 
 	if err != nil {
 		panic(err)
