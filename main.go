@@ -4,9 +4,16 @@ import (
 	"fmt"
 	"os"
 	"time"
-
+    "github.com/joho/godotenv"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
+
+func init {
+	err := godotenv.Load()
+    if err != nil {
+        log.Fatal("Error loading .env file")
+    }
+}
 
 func main() {
 	fmt.Println("Welcome to Kigali")
