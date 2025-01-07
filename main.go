@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
@@ -11,13 +12,13 @@ func main() {
 	fmt.Println("Welcome to Kigali")
 
 	c, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers": "uatcons.crvs.nida.gov.rw:49092",
-		"group.id":          "moh-crvs",
+		"bootstrap.servers": os.Getenv("BOOTSTRAP-SERVER"),
+		"group.id":          os.Getenv("GROUP-ID"),
 		"auto.offset.reset": "earliest",
 		"security.protocol": "SASL_SSL",
 		"sasl.mechanism":    "SCRAM-SHA-256",
-		"sasl.username":     "moh-broker",
-		"sasl.password":     "moh-broker-91823",
+		"sasl.username":     os.Getenv("USERNAME"),
+		"sasl.password":     os.Getenv("PASSWORD"),
 	})
 
 	if err != nil {
