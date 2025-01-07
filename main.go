@@ -18,7 +18,7 @@ func init() {
 }
 
 func main() {
-	fmt.Println("Welcome to Kigali")
+	fmt.Println("Connecting to the kafka broker")
 
 	c, err := kafka.NewConsumer(&kafka.ConfigMap{
 		"bootstrap.servers": os.Getenv("BOOTSTRAPSERVER"),
